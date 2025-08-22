@@ -41,12 +41,12 @@ int main() {
 
   auto thr_start = std::chrono::high_resolution_clock::now();
 
-  for (size_t i = 0; i < m; ++i) {
-    size_t end = (i == m - 1) ? (n - 1) : ((i + 1) * thr_quantity - 1);
-    thr.push_back(std::thread([&, i]() {
-      value[i] = sum(arr, thr_quantity * i, (i + 1) * thr_quantity - 1);
-    }));
-  }
+for (size_t i = 0; i < m; ++i) {
+  size_t end = (i == m - 1) ? (n - 1) : ((i + 1) * thr_quantity - 1);
+  thr.push_back(std::thread([&, i, end]() {
+    value[i] = sum(arr, thr_quantity * i, end);
+  }));
+}
 
   for (auto &t : thr)
     t.join();
